@@ -6,7 +6,6 @@ plugins {
 android {
     namespace = "ru.netology.nmedia"
     compileSdk = 36
-
     defaultConfig {
         applicationId = "ru.netology.nmedia"
         minSdk = 24
@@ -15,6 +14,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildFeatures {
+            viewBinding = true
+        }
     }
 
     buildTypes {
@@ -33,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures.viewBinding = true
+    buildToolsVersion = "36.0.0"
 }
 
 dependencies {

@@ -85,17 +85,16 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/like_count"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:id="@+id/likeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/common_margin"
         android:layout_marginStart="8dp"
-        android:text="10"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/like24"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="10" />
+        tools:text="100" />
 
 
     <ImageButton
@@ -105,17 +104,16 @@
         android:layout_marginHorizontal="@dimen/common_margin"
         android:layout_marginVertical="@dimen/common_margin"
         android:contentDescription="TODO"
-        app:layout_constraintStart_toEndOf="@id/like_count"
+        app:layout_constraintStart_toEndOf="@id/likeCount"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
         app:srcCompat="@drawable/ic_share_24" />
 
     <TextView
-        android:id="@+id/repost_count"
+        android:id="@+id/repostCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/common_margin"
         android:layout_marginStart="8dp"
-        android:text="5"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/share"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
