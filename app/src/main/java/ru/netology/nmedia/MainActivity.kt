@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
             author = "Нетология. Университет интернет-профессий будущего",
             published = "21 мая в 18:36",
             content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb",
-            likes = 999999,
-            shares = 999,
+            likes = 3562,
+            shares = 1999,
             likeByMe = false
         )
 
@@ -58,6 +58,32 @@ class MainActivity : AppCompatActivity() {
             share.setOnClickListener {
                 post = post.copy(shares = post.shares + 1)
                 repostCount.text = formatCount(post.shares)
+            }
+
+            // 1. Обработчик на весь экран (root)
+            root.setOnClickListener {
+                println("CLICK: root (ConstraintLayout)")
+            }
+
+            // 2. Обработчик на кнопку like24 (уже есть, но добавим лог)
+            like24.setOnClickListener {
+                println("CLICK: like24")
+                // Существующая логика лайка
+                post = if (post.likeByMe) {
+                    post.copy(likeByMe = false, likes = post.likes - 1)
+                } else {
+                    post.copy(likeByMe = true, likes = post.likes + 1)
+                }
+                like24.setImageResource(
+                    if (post.likeByMe) R.drawable.ic_liked_24
+                    else R.drawable.ic_like_24
+                )
+                likeCount.text = formatCount(post.likes)
+            }
+
+            // 3. Обработчик на аватар
+            avatar.setOnClickListener {
+                println("CLICK: avatar")
             }
         }
     }
