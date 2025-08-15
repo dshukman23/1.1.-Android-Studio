@@ -1,5 +1,7 @@
 package ru.netology.nmedia.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
@@ -12,8 +14,13 @@ class PostRepositoryInMemoryImpl : PostRepository {
         shares = 1999,
         likeByMe = false
     )
+        set(value) { // <---- сеттер
+            field = value // обновление самого поля
+            data.value = value // дополнительно обновление MutableLiveData
+        }
+    private val data = MutableLiveData(post)
 
-    override fun getPost(): Post = post
+    override fun getPost(): LiveData<Post> = data
 
     override fun like() {
         post = post.copy(
