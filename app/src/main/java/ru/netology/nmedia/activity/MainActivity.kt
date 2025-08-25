@@ -3,9 +3,8 @@ package ru.netology.nmedia.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import ru.netology.nmedia.R
+import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.util.formatCount
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -17,41 +16,19 @@ class MainActivity : AppCompatActivity() {
         // Получаем ViewModel
         val viewModel = ViewModelProvider(this)[PostViewModel::class.java]
 
+        val adapter = PostAdapter(
+            onItemLikeListener = { post ->
+                viewModel.likeById(post.id)
+            },
+            onItemShareListener = { post ->
+                viewModel.shareById(post.id)
+            }
+        )
+        binding.list.adapter = adapter
+
         // Наблюдаем за изменениями поста
-        viewModel.post.observe(this) { post ->
-            with(binding) {
-                author.text = post.author
-                published.text = post.published
-                content.text = post.content
-                likeCount.text = formatCount(post.likes)
-                repostCount.text = formatCount(post.shares)
-
-                like24.setImageResource(
-                    if (post.likeByMe) R.drawable.ic_liked_24
-                    else R.drawable.ic_like_24
-                )
-            }
-        }
-
-        // Обработчики кликов
-        with(binding) {
-            like24.setOnClickListener {
-                println("CLICK: like24")
-                viewModel.like()
-            }
-
-            share.setOnClickListener {
-                println("CLICK: share")
-                viewModel.share()
-            }
-
-            avatar.setOnClickListener {
-                println("CLICK: avatar")
-            }
-
-            root.setOnClickListener {
-                println("CLICK: root")
-            }
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
         }
     }
 }
