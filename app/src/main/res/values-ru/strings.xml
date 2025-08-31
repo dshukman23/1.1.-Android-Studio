@@ -2,4 +2,16 @@
 <resources>
     <string name="app_name">НМедиа</string>
     <string name="nmedia">НМедиа</string>
+    <string name="description_post_author_avatar">Аватар автора поста</string>
+    <string name="description_post_menu">Меню поста</string>
+    <string name="description_post_like">Нравится</string>
+    <string name="description_post_share">Поделиться</string>
+    <string name="description_post_save">Сохранить</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="post_text">Опубликовать текст</string>
+    <string name="menu_edit">Изменить</string>
+    <string name="error_empty_content">Содержимое не может быть пустым</string>
+    <string name="description_cancel_edit">Отменить редактирование</string>
+
+
 </resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
+    private var nextId = 1L
     private var posts = listOf(
         Post(
             id = 3,
@@ -64,5 +65,19 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 post
             }
         }
+    }
+
+    override fun removeById(id: Long) {
+        posts = posts.filter { it.id != id }
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        posts = if (post.id == 0L) {
+            listOf(post.copy(id = nextId++, author = "Me", published = "now")) + posts
+        } else {
+            posts.map { if (it.id != post.id) it else it.copy(content = post.content) }
+        }
+        data.value = posts
     }
 }
