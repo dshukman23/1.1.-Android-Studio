@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
                 viewModel.edit(post)
             }
 
+            override fun onPostShown(post: Post) {
+                viewModel.onPostShown(post)
+            }
         })
         binding.list.adapter = adapter
 

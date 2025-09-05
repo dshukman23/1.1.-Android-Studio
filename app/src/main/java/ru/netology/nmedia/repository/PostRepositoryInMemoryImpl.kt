@@ -14,7 +14,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "Здесь находится пост для проверки скрола. Мир мобильных приложений огромен и постоянно растет, а Android занимает львиную долю этого рынка. Если вы когда-либо задумывались о том, как создаются эти удобные и функциональные программы, которые мы используем каждый день, то этот пост для вас! Сегодня мы погрузимся в увлекательный мир разработки под Android.",
             likes = 1899,
             shares = 99,
-            likeByMe = false
+            likeByMe = false,
+            views = 999
         ),
         Post(
             id = 2,
@@ -23,7 +24,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "Знаний хватит на всех: на следующей неделе разбираемся с разработкой мобильных приложений, учимся рассказывать... ",
             likes = 20,
             shares = 999,
-            likeByMe = false
+            likeByMe = false,
+            views = 345
         ),
         Post(
             id = 1,
@@ -32,7 +34,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb",
             likes = 3599,
             shares = 1999,
-            likeByMe = false
+            likeByMe = false,
+            views = 1599
         )
     )
         set(value) { // <---- сеттер
@@ -79,5 +82,37 @@ class PostRepositoryInMemoryImpl : PostRepository {
             posts.map { if (it.id != post.id) it else it.copy(content = post.content) }
         }
         data.value = posts
+    }
+
+    private val _data = MutableLiveData(posts.toList())
+
+    override fun views(id: Long) {
+        val currentList = posts.toMutableList()
+        val post = currentList.find { it.id == id } ?: return
+
+        val updatedPost = post.copy(views = post.views + 1)
+
+        val index = currentList.indexOf(post)
+        currentList[index] = updatedPost
+
+        posts = currentList
+        _data.value = posts.toList()
+    }
+
+    override fun markAsViewed(id: Long) {
+        val currentPosts = posts.toMutableList()
+        val post = currentPosts.find { it.id == id } ?: return
+
+        // Увеличиваем views только если ещё не просматривали
+        if (!post.viewed) {
+            val updatedPost = post.copy(
+                views = post.views + 1,
+                viewed = true  // помечаем как просмотренный
+            )
+            val index = currentPosts.indexOf(post)
+            currentPosts[index] = updatedPost
+            posts = currentPosts
+            _data.value = posts.toList()
+        }
     }
 }

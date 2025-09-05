@@ -16,7 +16,8 @@ class PostViewModel : ViewModel() {
             content = "",
             likes = 0,
             shares = 0,
-            likeByMe = false
+            likeByMe = false,
+            views = 0
         )
     }
 
@@ -35,12 +36,17 @@ class PostViewModel : ViewModel() {
         }
         edited.value = empty
     }
-
     fun edit(post: Post) {
         edited.value = post
     }
-
     fun cancelEdit() {
         edited.value = empty
+    }
+    fun viewsById(id: Long) = repository.views(id)
+    fun markAsViewed(id: Long) = repository.markAsViewed(id)
+    fun onPostShown(post: Post) {
+        if (!post.viewed) {
+            repository.markAsViewed(post.id)
+        }
     }
 }
