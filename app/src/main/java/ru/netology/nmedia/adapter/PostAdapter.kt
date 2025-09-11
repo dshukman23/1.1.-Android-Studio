@@ -16,7 +16,7 @@ interface OnInteractionListener {
     fun share(post: Post)
     fun remove(post: Post)
     fun edit(post: Post)
-    fun onPostShown(post: Post)  // ← если добавлял
+    fun onPostShown(post: Post)
 }
 
 class PostAdapter(
