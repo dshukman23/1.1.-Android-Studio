@@ -138,5 +138,42 @@
         app:layout_constraintStart_toEndOf="@+id/share"
         app:layout_constraintTop_toBottomOf="@id/barrier2"
         tools:text="100" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="videoStub, videoPlayButton"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/videoStub"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/colorOnSurfaceVariant"
+        android:contentDescription="@string/description_post_video_stub"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:srcCompat="@drawable/ic_video_stub"
+    tools:ignore="ContentDescription" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/videoPlayButton"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/description_play_video"
+        app:icon="@drawable/ic_play_24"
+        app:iconSize="28dp"
+        app:layout_constraintBottom_toBottomOf="@id/videoStub"
+        app:layout_constraintEnd_toEndOf="@id/videoStub"
+        app:layout_constraintTop_toTopOf="@id/videoStub" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

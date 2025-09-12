@@ -1,7 +1,12 @@
 package ru.netology.nmedia.adapter
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -47,6 +52,7 @@ class PostViewHolder(
     private var currentPost: Post? = null
 
     fun bind(post: Post) {
+        binding.videoGroup.visibility = if (post.video != null) View.VISIBLE else View.GONE
         currentPost = post
         binding.apply {
             author.text = post.author
@@ -59,6 +65,33 @@ class PostViewHolder(
 
             val iconRes = if (post.likeByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
             like24.setIconResource(iconRes)
+
+            binding.videoStub.setOnClickListener {
+                currentPost?.video?.let { url ->
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(url)
+                        }
+                        it.context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        Toast.makeText(it.context, "Нет приложения для открытия ссылки", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            binding.videoPlayButton.setOnClickListener {
+                currentPost?.video?.let { url ->
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(url)
+                        }
+                        it.context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        Toast.makeText(it.context, "Невозможно открыть видео", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
         }
 
         with(binding) {

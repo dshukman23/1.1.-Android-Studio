@@ -15,7 +15,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 1899,
             shares = 99,
             likeByMe = false,
-            views = 999
+            views = 999,
+            video = "https://rutube.ru/video/27477843a39b439337f5febf3512746f/"
         ),
         Post(
             id = 2,
@@ -25,7 +26,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 20,
             shares = 999,
             likeByMe = false,
-            views = 345
+            views = 345,
+            video = "https://vkvideo.ru/video-142506394_456239470?t=6h59m44s"
         ),
         Post(
             id = 1,
@@ -35,7 +37,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 3599,
             shares = 1999,
             likeByMe = false,
-            views = 1599
+            views = 1599,
+            video = "https://vksport.vkvideo.ru/video-28099263_456242736"
         )
     )
         set(value) { // <---- сеттер

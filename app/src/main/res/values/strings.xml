@@ -11,4 +11,7 @@
     <string name="menu_edit">Edit</string>
     <string name="error_empty_content">Content can\'t be empty</string>
     <string name="description_cancel_edit">Cancel edit</string>
+    <string name="description_post_video_stub">Post video</string>
+    <string name="description_play_video">Play video</string>
+
 </resources>

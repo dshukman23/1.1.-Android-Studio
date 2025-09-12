@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="135dp"
+    android:viewportWidth="240"
+    android:viewportHeight="135"
+    android:tint="?attr/colorOnSurfaceVariant">
+
+    <!-- Фон -->
+    <path
+        android:fillColor="#CCCCCC"
+        android:pathData="M0,0 H240 V135 H0 Z" />
+
+    <!-- Иконка Play поверх фона -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M90,45 L90,90 140,67.5 Z" />
+
+    <!-- Опционально: рамка -->
+    <path
+        android:strokeColor="#AAAAAA"
+        android:strokeWidth="2"
+        android:pathData="M1,1 H238 V134 H1 Z" />
+</vector>

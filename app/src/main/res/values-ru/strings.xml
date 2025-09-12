@@ -12,6 +12,7 @@
     <string name="menu_edit">Изменить</string>
     <string name="error_empty_content">Содержимое не может быть пустым</string>
     <string name="description_cancel_edit">Отменить редактирование</string>
-
+    <string name="description_post_video_stub">Публикация видео</string>
+    <string name="description_play_video">Воспроизведение видео</string>
 
 </resources>
