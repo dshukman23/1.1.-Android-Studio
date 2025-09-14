@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 
-class PostRepositoryInMemoryImpl : PostRepository {
+object PostRepositoryInMemoryImpl : PostRepository {
     private var nextId = 1L
     private var posts = listOf(
         Post(
@@ -41,9 +41,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             video = "https://vksport.vkvideo.ru/video-28099263_456242736"
         )
     )
-        set(value) { // <---- сеттер
-            field = value // обновление самого поля
-            data.value = value // дополнительно обновление MutableLiveData
+        set(value) {
+            field = value
+            data.value = value
         }
     private val data = MutableLiveData(posts)
 
@@ -82,12 +82,10 @@ class PostRepositoryInMemoryImpl : PostRepository {
         posts = if (post.id == 0L) {
             listOf(post.copy(id = nextId++, author = "Me", published = "now")) + posts
         } else {
-            posts.map { if (it.id != post.id) it else it.copy(content = post.content) }
+            posts.map { if (it.id == post.id) post else it }
         }
-        data.value = posts
+        data.value = posts.toList()
     }
-
-    private val _data = MutableLiveData(posts.toList())
 
     override fun views(id: Long) {
         val currentList = posts.toMutableList()
@@ -99,23 +97,22 @@ class PostRepositoryInMemoryImpl : PostRepository {
         currentList[index] = updatedPost
 
         posts = currentList
-        _data.value = posts.toList()
+        data.value = posts.toList()
     }
 
     override fun markAsViewed(id: Long) {
         val currentPosts = posts.toMutableList()
         val post = currentPosts.find { it.id == id } ?: return
 
-        // Увеличиваем views только если ещё не просматривали
         if (!post.viewed) {
             val updatedPost = post.copy(
                 views = post.views + 1,
-                viewed = true  // помечаем как просмотренный
+                viewed = true
             )
             val index = currentPosts.indexOf(post)
             currentPosts[index] = updatedPost
             posts = currentPosts
-            _data.value = posts.toList()
+            data.value = posts.toList()
         }
     }
 }

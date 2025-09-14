@@ -158,6 +158,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintBottom_toBottomOf="@id/barrier2"
         app:srcCompat="@drawable/ic_video_stub"
     tools:ignore="ContentDescription" />
 

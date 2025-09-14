@@ -22,6 +22,7 @@ interface OnInteractionListener {
     fun remove(post: Post)
     fun edit(post: Post)
     fun onPostShown(post: Post)
+    fun playVideo(url: String)
 }
 
 class PostAdapter(
