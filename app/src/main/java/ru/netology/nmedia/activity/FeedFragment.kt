@@ -1,38 +1,32 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
+class FeedFragment : Fragment() {
 
-    private lateinit var newPostLauncher: ActivityResultLauncher<Post?>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val viewModel = ViewModelProvider(this)[PostViewModel::class.java]
-
-        newPostLauncher = registerForActivityResult(NewPostContract) { result ->
-            try {
-                result ?: return@registerForActivityResult
-                viewModel.save(result)
-            } finally {
-                viewModel.cancelEdit()
-            }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentFeedBinding.inflate(inflater, container, false)
+        val viewModel: PostViewModel by activityViewModels()
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun like(post: Post) {
                 viewModel.likeById(post.id)
@@ -44,8 +38,7 @@ class MainActivity : AppCompatActivity() {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TEXT, post.content)
                 }
-                val chooser =
-                    Intent.createChooser(intent, getString(R.string.description_post_share))
+                val chooser = Intent.createChooser(intent, getString(R.string.description_post_share))
                 startActivity(chooser)
                 viewModel.shareById(post.id)
             }
@@ -56,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun edit(post: Post) {
                 viewModel.edit(post)
-                newPostLauncher.launch(post)
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
             }
 
             override fun onPostShown(post: Post) {
@@ -66,36 +59,43 @@ class MainActivity : AppCompatActivity() {
             override fun playVideo(url: String) {
                 try {
                     val intent = Intent(Intent.ACTION_VIEW).apply {
-                        data = Uri.parse(url.trim())
+                        data = url.trim().toUri()
                     }
-                    if (intent.resolveActivity(packageManager) != null) {
+                    if (intent.resolveActivity(requireContext().packageManager) != null) {
                         startActivity(intent)
                     } else {
                         Toast.makeText(
-                            this@MainActivity,
+                            requireContext(),
                             "Нет приложения для просмотра видео",
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, "Не удалось открыть видео", Toast.LENGTH_LONG)
-                        .show()
+                } catch (_: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Не удалось открыть видео",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
+            }
+
+            override fun onPostClicked(post: Post) {
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_singlePostFragment, bundleOf("postId" to post.id)
+                )
             }
         })
+
         binding.list.adapter = adapter
 
-        viewModel.data.observe(this) { posts ->
-            val new = posts.size > adapter.currentList.size && adapter.currentList.isNotEmpty()
-            adapter.submitList(posts) {
-                if (new) {
-                    binding.list.smoothScrollToPosition(0)
-                }
-            }
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            adapter.submitList(posts)
         }
 
         binding.add.setOnClickListener {
-            newPostLauncher.launch(null)
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
+        return binding.root
     }
 }

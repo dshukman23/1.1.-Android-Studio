@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/common_margin"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.AppActivity">
 
     <ImageView
         android:id="@+id/avatar"
@@ -86,7 +86,7 @@
         android:id="@+id/like24"
         style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_marginVertical="@dimen/common_margin"
         android:layout_marginTop="16dp"
         android:checkable="false"
@@ -105,7 +105,7 @@
         android:id="@+id/share"
         style="@style/Widget.AppTheme.ShareButton"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_marginHorizontal="@dimen/common_margin"
         android:layout_marginVertical="@dimen/common_margin"
         android:gravity="center_vertical"
@@ -123,7 +123,7 @@
         android:id="@+id/views"
         style="@style/Widget.AppTheme.ViewsButton"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_marginVertical="@dimen/common_margin"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"

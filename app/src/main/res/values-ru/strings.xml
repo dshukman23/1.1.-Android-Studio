@@ -14,5 +14,7 @@
     <string name="description_cancel_edit">Отменить редактирование</string>
     <string name="description_post_video_stub">Публикация видео</string>
     <string name="description_play_video">Воспроизведение видео</string>
+    <string name="description_add_post">Добавить пост</string>
+
 
 </resources>

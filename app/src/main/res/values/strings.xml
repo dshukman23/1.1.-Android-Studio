@@ -13,5 +13,7 @@
     <string name="description_cancel_edit">Cancel edit</string>
     <string name="description_post_video_stub">Post video</string>
     <string name="description_play_video">Play video</string>
+    <string name="description_add_post">Add post</string>
+
 
 </resources>

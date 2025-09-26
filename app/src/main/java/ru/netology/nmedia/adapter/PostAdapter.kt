@@ -23,6 +23,7 @@ interface OnInteractionListener {
     fun edit(post: Post)
     fun onPostShown(post: Post)
     fun playVideo(url: String)
+    fun onPostClicked(post: Post)
 }
 
 class PostAdapter(
@@ -92,7 +93,12 @@ class PostViewHolder(
                     }
                 }
             }
+        }
 
+        binding.root.setOnClickListener {
+            currentPost?.let { post ->
+                onInteractionListener.onPostClicked(post)
+            }
         }
 
         with(binding) {

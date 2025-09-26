@@ -50,9 +50,12 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.gson)
+    implementation("androidx.core:core:1.17.0")
     implementation("androidx.activity:activity-ktx:${activity_version}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle_version}")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.9.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.9.4")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
